@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reading Test</title>
+<style>
+body{
+font-family:Arial;
+padding:20px;
+background:#f8fbff;
+}
+h2{color:#1c55c3;}
+.question{
+background:white;
+padding:12px;
+border-radius:8px;
+margin:12px 0;
+}
+button{
+padding:10px 16px;
+background:#1c55c3;
+color:white;
+border:none;
+}
+</style>
+</head>
+<body>
+
+<h2>Reading Test – TOEIC Practice</h2>
+<div id="quiz"></div>
+<button onclick="check()">Submit</button>
+<p id="score"></p>
+
+<script>
+const questions=[
+{q:"An email states: 'The office will be closed on Friday.' What does this mean?",
+o:["No one works Friday","Employees work late","Office opens","Meeting cancelled"],a:0},
+
+{q:"A notice says: 'Submit forms by noon.' What should you do?",
+o:["Turn in forms early","After noon","In evening","Ignore"],a:0},
+
+{q:"The train arrives late due to heavy rain. What caused the delay?",
+o:["Snow","Storm","Wind","Rain"],a:3},
+
+{q:"Which is the purpose of a reminder email?",
+o:["To apologize","To inform again","To advertise","To complain"],a:1},
+
+{q:"What does an agenda provide?",
+o:["List of participants","Meeting topics","Payment details","Office rules"],a:1},
+
+{q:"What happens if you miss the deadline?",
+o:["No effect","Penalty or rejection","Meeting held","Extra bonus"],a:1},
+
+{q:"An advertisement says 'Sale ends tomorrow.' What should customers do?",
+o:["Wait","Cancel orders","Shop today","Ignore"],a:2},
+
+{q:"A job posting requires experience. Who fits best?",
+o:["New graduate","Experienced worker","Student","Intern"],a:1},
+
+{q:"A notice asks for volunteers. What should people do?",
+o:["Pay fee","Offer help","Reject","Study"],a:1},
+
+{q:"An event is postponed until next week. What changed?",
+o:["Location","Time","Price","Host"],a:1}
+];
+
+load();
+
+function load(){
+ let html="";
+ questions.forEach((q,i)=>{
+ html+=`<div class="question">
+ ${i+1}. ${q.q}<br>
+ ${q.o.map((x,j)=>`
+ <label><input type="radio" name="q${i}" value="${j}"> ${x}</label><br>
+ `).join("")}
+ </div>`;
+ });
+ document.getElementById("quiz").innerHTML=html;
+}
+
+function check(){
+ let score=0;
+ questions.forEach((q,i)=>{
+ const ans=document.querySelector(`input[name="q${i}"]:checked`);
+ if(ans && +ans.value===q.a){score++;}
+ });
+ document.getElementById("score").innerText=`Your Score: ${score}/10`;
+}
+</script>
+
+</body>
+</html>

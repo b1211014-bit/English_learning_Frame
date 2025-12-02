@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Grammar Test</title>
+
+<style>
+body{
+font-family:Arial;
+padding:20px;
+background:#f8fbff;
+}
+h2{color:#1c55c3;}
+.question{
+background:white;
+padding:12px;
+border-radius:8px;
+margin:12px 0;
+}
+button{
+padding:10px 16px;
+background:#1c55c3;
+color:white;
+border:none;
+}
+</style>
+</head>
+<body>
+
+<h2>Grammar Test – TOEIC Level</h2>
+
+<div id="quiz"></div>
+<button onclick="check()">Submit</button>
+<p id="score"></p>
+
+<script>
+const questions=[
+{q:"She ___ already finished the report.",
+ o:["has","have","having","had"],a:0},
+
+{q:"If he ___ earlier, he would be on time.",
+ o:["leaves","left","was leaving","leave"],a:1},
+
+{q:"The documents ___ by the manager yesterday.",
+ o:["approve","approved","were approved","approving"],a:2},
+
+{q:"Neither the staff nor the manager ___ responsible.",
+ o:["are","were","is","be"],a:2},
+
+{q:"Please ensure that all forms ___ completed.",
+ o:["is","are","to be","being"],a:1},
+
+{q:"The contract must ___ before Friday.",
+ o:["sign","be signed","signing","signed"],a:1},
+
+{q:"He works ___ than before.",
+ o:["more efficient","more efficiently","efficient","most efficient"],a:1},
+
+{q:"___ you need assistance, contact support.",
+ o:["Although","If","Because","Unless"],a:1},
+
+{q:"The memo was sent ___ Monday.",
+ o:["at","in","on","by"],a:2},
+
+{q:"There is ___ information available.",
+ o:["many","few","much","several"],a:2}
+];
+
+load();
+
+function load(){
+ let html="";
+ questions.forEach((q,i)=>{
+ html+=`<div class="question">
+ ${i+1}. ${q.q}<br>
+ ${q.o.map((x,j)=>`
+ <label><input type="radio" name="q${i}" value="${j}"> ${x}</label><br>
+ `).join("")}
+ </div>`;
+ });
+ document.getElementById("quiz").innerHTML=html;
+}
+
+function check(){
+ let score=0;
+ questions.forEach((q,i)=>{
+ let ans=document.querySelector(`input[name="q${i}"]:checked`);
+ if(ans && +ans.value===q.a){score++}
+ });
+ document.getElementById("score").innerText=`Your Score: ${score}/10`;
+}
+</script>
+
+</body>
+</html>

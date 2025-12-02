@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vocabulary Test</title>
+
+<style>
+body{
+    font-family:Arial;
+    padding:20px;
+    background:#f8faff;
+}
+
+h2{
+    color:#1E5BD8;
+}
+
+.question{
+    margin:15px 0;
+}
+
+button{
+    background:#1E5BD8;
+    color:white;
+    border:none;
+    padding:10px;
+    cursor:pointer;
+}
+button:hover{
+    background:#133f96;
+}
+</style>
+</head>
+<body>
+
+<h2>Vocabulary Practice Test</h2>
+
+<div id="quiz"></div>
+
+<button onclick="submit()">Submit</button>
+
+<p id="result"></p>
+
+<script>
+const questions = [
+  {
+    q:"What does 'efficient' mean?",
+    options:["Working well with little waste","Very slow","Very expensive","Confusing"],
+    answer:0
+  },
+  {
+    q:"What does 'confirm' mean?",
+    options:["Deny","Cancel","Verify","Hide"],
+    answer:2
+  }
+];
+
+// clone until ~10 questions
+while(questions.length<10){
+    questions.push(JSON.parse(JSON.stringify(questions[questions.length%2])));
+}
+
+function loadQuiz(){
+    let html="";
+    questions.forEach((item,i)=>{
+        html+=`
+        <div class="question">
+            <p>${i+1}. ${item.q}</p>
+            ${item.options.map((o,j)=>`
+                <label>
+                    <input type="radio" name="q${i}" value="${j}">
+                    ${o}
+                </label><br>
+            `).join("")}
+        </div>
+        `;
+    });
+    document.getElementById("quiz").innerHTML=html;
+}
+
+function submit(){
+    let score=0;
+    questions.forEach((item,i)=>{
+        const user = document.querySelector(`input[name="q${i}"]:checked`);
+        if(user && parseInt(user.value)===item.answer){
+            score++;
+        }
+    });
+
+    document.getElementById("result").innerText =
+      `Your score: ${score} / ${questions.length}`;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>
